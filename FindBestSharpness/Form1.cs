@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 
+using MathNet.Numerics.Interpolation;
+
 namespace FindBestSharpness
 {
     public partial class Form1 : Form
@@ -26,7 +28,7 @@ namespace FindBestSharpness
         private Mat m_cur_frame;
         private const int exifOrientationID = 0x112; //274
 
-        private List<int> arrayOfHeights;
+        private List<int> arrayOfZHeights;
         private List<Bitmap> arrayOfImages;
         private List<double> arrayOfStd;
         int sizeSquare;
@@ -56,8 +58,9 @@ namespace FindBestSharpness
             file_index = 0;
             file_list = new List<string>();
             path_list = new List<string>();
-            arrayOfHeights = new List<int>();
+            arrayOfZHeights = new List<int>();
             arrayOfImages = new List<Bitmap>();
+            arrayOfStd = new List<double>();
             sizeSquare = 100;
             centerSquare = new Point(0, 0);
 
@@ -169,7 +172,7 @@ namespace FindBestSharpness
             //                 return;
             //             }
 
-            arrayOfHeights.Clear();
+            arrayOfZHeights.Clear();
             arrayOfImages.Clear();
             arrayOfStd.Clear();
 
@@ -179,7 +182,7 @@ namespace FindBestSharpness
 
             foreach(string file in file_list)
             {
-                arrayOfHeights.Add(int.Parse(file));
+                arrayOfZHeights.Add(int.Parse(file));
             }
 
             foreach(string path in path_list)
@@ -187,14 +190,15 @@ namespace FindBestSharpness
                 arrayOfImages.Add(new Bitmap(path));
             }
 
-            int res = FindSharpestImage(arrayOfImages.ToArray(), arrayOfHeights.ToArray(), sizeSquare, centerSquare);
+            int bestHeight = FindSharpestImage(arrayOfImages.ToArray(), arrayOfZHeights.ToArray(), sizeSquare, centerSquare);
+
 
         }
 
         private int FindSharpestImage(Bitmap[] arrayOfImages, int[] arrayOfHeights, int sizeSquare, Point centerSquare)
         {
-            if (arrayOfImages.Length != arrayOfImages.Length)
-                return 0;
+            if (arrayOfImages.Length != arrayOfHeights.Length)
+                return -1;
             for (int i = 0; i < arrayOfImages.Length; i++)
             {
                 Image<Bgr, Byte> imageCV = new Image<Bgr, Byte>(arrayOfImages[i]);
@@ -212,8 +216,44 @@ namespace FindBestSharpness
                 arrayOfStd.Add(measured);
             }
 
-            return 0;
+            int bestHeight = FindGoodHeight(arrayOfHeights, arrayOfStd.ToArray());
+
+            return bestHeight;
         }
+
+        private int FindGoodHeight(int[] heights,  double[] stdVariance)
+        {
+            if(0 == stdVariance.Length)
+                return -1;
+            double[] xVec = heights.ToList().Select(x => (double)x).ToArray();
+            CubicSpline cubicSpline = CubicSpline.InterpolateNatural(xVec, stdVariance);
+
+            int maxHeight = heights.ToList().Max();
+            int minHeight = heights.ToList().Min();
+            int count = maxHeight - minHeight;
+            double[] predXVec = new double[count];
+            double[] predYVec = new double[count];
+
+            double maxYVect = 0;
+            int ret = 0;
+
+            for(int i = 0; i < count; i++)
+            {
+                predXVec[i] = minHeight + i;
+                predYVec[i] = cubicSpline.Interpolate(predXVec[i]);
+                if (maxYVect < predYVec[i])
+                {
+                    maxYVect = predYVec[i];
+                    ret = (int)predXVec[i];
+                }
+
+//                 maxXElement = maxXElement < predYVec[i] ? predYVec[i] : maxXElement;
+            }
+
+            return ret;
+
+        }
+
         public static void ExifRotate(Image img)
         {
             if (!img.PropertyIdList.Contains(exifOrientationID))
@@ -253,7 +293,7 @@ namespace FindBestSharpness
         {
             file_list.Clear();
             path_list.Clear();
-            arrayOfHeights.Clear();
+            arrayOfZHeights.Clear();
             arrayOfImages.Clear();
             arrayOfStd.Clear();
         }
@@ -322,6 +362,19 @@ namespace FindBestSharpness
 
         public int Size;
     }
+
+//     public struct StdVariance
+//     {
+//         public int height;
+//         public double variance;
+// 
+//         public StdVariance(int h, double v)
+//         {
+//             height = h;
+//             variance = v;
+//         }
+// 
+//     }
 
     public delegate void ThumbnailImageEventHandler(object sender, ThumbnailImageEventArgs e);
 

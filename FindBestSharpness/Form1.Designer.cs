@@ -40,9 +40,7 @@
             this.sSquare = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.zAxis = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new FindBestSharpness.ThumbnailFlowLayoutPanel();
@@ -56,9 +54,10 @@
             // 
             // dirBrowerBtn
             // 
-            this.dirBrowerBtn.Location = new System.Drawing.Point(543, 9);
+            this.dirBrowerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dirBrowerBtn.Location = new System.Drawing.Point(633, 9);
             this.dirBrowerBtn.Name = "dirBrowerBtn";
-            this.dirBrowerBtn.Size = new System.Drawing.Size(75, 23);
+            this.dirBrowerBtn.Size = new System.Drawing.Size(220, 31);
             this.dirBrowerBtn.TabIndex = 0;
             this.dirBrowerBtn.Text = "Browser...";
             this.dirBrowerBtn.UseVisualStyleBackColor = true;
@@ -66,26 +65,29 @@
             // 
             // label_cur_frame
             // 
-            this.label_cur_frame.Location = new System.Drawing.Point(20, 25);
+            this.label_cur_frame.Location = new System.Drawing.Point(13, 43);
             this.label_cur_frame.Name = "label_cur_frame";
-            this.label_cur_frame.Size = new System.Drawing.Size(49, 23);
+            this.label_cur_frame.Size = new System.Drawing.Size(56, 23);
             this.label_cur_frame.TabIndex = 3;
             this.label_cur_frame.Text = "X :";
+            this.label_cur_frame.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtDirectory
             // 
+            this.txtDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDirectory.Location = new System.Drawing.Point(12, 11);
             this.txtDirectory.Name = "txtDirectory";
-            this.txtDirectory.Size = new System.Drawing.Size(525, 20);
+            this.txtDirectory.Size = new System.Drawing.Size(606, 29);
             this.txtDirectory.TabIndex = 4;
             this.txtDirectory.Text = "Select the Directory";
             // 
             // executeButton
             // 
             this.executeButton.Enabled = false;
-            this.executeButton.Location = new System.Drawing.Point(639, 9);
+            this.executeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.executeButton.Location = new System.Drawing.Point(636, 356);
             this.executeButton.Name = "executeButton";
-            this.executeButton.Size = new System.Drawing.Size(75, 23);
+            this.executeButton.Size = new System.Drawing.Size(220, 31);
             this.executeButton.TabIndex = 0;
             this.executeButton.Text = "Start";
             this.executeButton.UseVisualStyleBackColor = true;
@@ -93,20 +95,22 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(20, 59);
+            this.label1.Location = new System.Drawing.Point(13, 85);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 23);
+            this.label1.Size = new System.Drawing.Size(56, 23);
             this.label1.TabIndex = 3;
             this.label1.Text = "Y :";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.sSquare);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Location = new System.Drawing.Point(639, 213);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(636, 103);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(208, 167);
+            this.groupBox1.Size = new System.Drawing.Size(220, 228);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Geometry";
@@ -117,92 +121,82 @@
             this.groupBox2.Controls.Add(this.startY);
             this.groupBox2.Controls.Add(this.label_cur_frame);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 21);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(12, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(196, 95);
+            this.groupBox2.Size = new System.Drawing.Size(196, 126);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Center of Squre ";
             // 
             // startX
             // 
-            this.startX.Location = new System.Drawing.Point(75, 24);
+            this.startX.Location = new System.Drawing.Point(81, 40);
             this.startX.Name = "startX";
-            this.startX.Size = new System.Drawing.Size(100, 20);
+            this.startX.Size = new System.Drawing.Size(100, 26);
             this.startX.TabIndex = 4;
             this.startX.Text = "0";
             this.startX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkValidInput);
             // 
             // startY
             // 
-            this.startY.Location = new System.Drawing.Point(75, 58);
+            this.startY.Location = new System.Drawing.Point(81, 82);
             this.startY.Name = "startY";
-            this.startY.Size = new System.Drawing.Size(100, 20);
+            this.startY.Size = new System.Drawing.Size(100, 26);
             this.startY.TabIndex = 4;
             this.startY.Text = "0";
             this.startY.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkValidInput);
             // 
             // sSquare
             // 
-            this.sSquare.Location = new System.Drawing.Point(81, 128);
+            this.sSquare.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sSquare.Location = new System.Drawing.Point(93, 181);
             this.sSquare.Name = "sSquare";
-            this.sSquare.Size = new System.Drawing.Size(100, 20);
+            this.sSquare.Size = new System.Drawing.Size(100, 26);
             this.sSquare.TabIndex = 4;
             this.sSquare.Text = "100";
             this.sSquare.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkValidInput);
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(26, 129);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(25, 185);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 23);
+            this.label6.Size = new System.Drawing.Size(56, 23);
             this.label6.TabIndex = 3;
             this.label6.Text = "Size :";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Controls.Add(this.zAxis);
-            this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(639, 395);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(636, 410);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(208, 105);
+            this.groupBox3.Size = new System.Drawing.Size(220, 87);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Result";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(81, 67);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.Text = "100";
-            // 
             // zAxis
             // 
-            this.zAxis.Location = new System.Drawing.Point(81, 33);
+            this.zAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.zAxis.Location = new System.Drawing.Point(93, 39);
             this.zAxis.Name = "zAxis";
-            this.zAxis.Size = new System.Drawing.Size(100, 20);
+            this.zAxis.Size = new System.Drawing.Size(100, 26);
             this.zAxis.TabIndex = 4;
             this.zAxis.Text = "100";
             // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(26, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 23);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Height :";
-            // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(26, 34);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(6, 42);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 23);
+            this.label5.Size = new System.Drawing.Size(75, 23);
             this.label5.TabIndex = 3;
             this.label5.Text = "Z axis :";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panelMain
             // 
@@ -225,10 +219,10 @@
             this.trackBarSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarSize.AutoSize = false;
             this.trackBarSize.LargeChange = 1;
-            this.trackBarSize.Location = new System.Drawing.Point(723, 10);
+            this.trackBarSize.Location = new System.Drawing.Point(633, 56);
             this.trackBarSize.Maximum = 2;
             this.trackBarSize.Name = "trackBarSize";
-            this.trackBarSize.Size = new System.Drawing.Size(124, 23);
+            this.trackBarSize.Size = new System.Drawing.Size(220, 23);
             this.trackBarSize.TabIndex = 6;
             this.trackBarSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBarSize.Value = 1;
@@ -238,7 +232,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 509);
+            this.ClientSize = new System.Drawing.Size(868, 509);
             this.Controls.Add(this.trackBarSize);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.groupBox3);
@@ -273,9 +267,7 @@
         private System.Windows.Forms.TextBox startX;
         private System.Windows.Forms.TextBox sSquare;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox zAxis;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.TrackBar trackBarSize;
