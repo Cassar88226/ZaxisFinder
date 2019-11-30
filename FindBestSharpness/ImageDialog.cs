@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.IO;
 
 namespace FindBestSharpness
 {
@@ -27,7 +28,9 @@ namespace FindBestSharpness
         private void SetImageIntern(object filename)
         {
             this.imageViewerFull.Image = Image.FromFile((string)filename);
-            this.imageViewerFull.SetFilename((string)filename);
+            string file = Path.GetFileNameWithoutExtension((string)filename);
+
+            this.imageViewerFull.SetFilename(file);
             this.imageViewerFull.Invalidate();
         }
 

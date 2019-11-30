@@ -21,10 +21,16 @@ namespace FindBestSharpness
 
         private string curDirectory;
         private List<String> file_list;
+        private List<String> path_list;
         private int file_index;
-        private VideoCapture m_vc_capture;
         private Mat m_cur_frame;
         private const int exifOrientationID = 0x112; //274
+
+        private List<int> arrayOfHeights;
+        private List<Bitmap> arrayOfImages;
+        private List<double> arrayOfStd;
+        int sizeSquare;
+        Point centerSquare;
 
 
         public event ThumbnailImageEventHandler OnImageSizeChanged;
@@ -49,6 +55,11 @@ namespace FindBestSharpness
             curDirectory = null;
             file_index = 0;
             file_list = new List<string>();
+            path_list = new List<string>();
+            arrayOfHeights = new List<int>();
+            arrayOfImages = new List<Bitmap>();
+            sizeSquare = 100;
+            centerSquare = new Point(0, 0);
 
 
             m_ImageDialog = new ImageDialog();
@@ -83,6 +94,7 @@ namespace FindBestSharpness
             else
             {
                 this.dirBrowerBtn.Enabled = true;
+                this.executeButton.Enabled = true;
             }
         }
 
@@ -97,6 +109,9 @@ namespace FindBestSharpness
             }
             else
             {
+                string file = Path.GetFileNameWithoutExtension(imageFilename);
+                file_list.Add(file);
+                path_list.Add(imageFilename);
                 int size = ImageSize;
 
                 ImageViewer imageViewer = new ImageViewer();
@@ -106,7 +121,10 @@ namespace FindBestSharpness
                 imageViewer.Height = size;
                 imageViewer.IsThumbnail = true;
                 imageViewer.MouseClick += new MouseEventHandler(imageViewer_MouseClick);
-                imageViewer.SetFilename(imageFilename);
+                imageViewer.SetFilename(file);
+
+
+
 
 
                 this.OnImageSizeChanged += new ThumbnailImageEventHandler(imageViewer.ImageSizeChanged);
@@ -139,18 +157,62 @@ namespace FindBestSharpness
 
         private void Start_Finder(object sender, EventArgs e)
         {
-            string cur_filename = file_list.ElementAt(file_index++);
-            Image image = Image.FromFile(cur_filename);
-            ExifRotate(image);
+            //             string cur_filename = file_list.ElementAt(file_index++);
+            //             Image image = Image.FromFile(cur_filename);
+            //             ExifRotate(image);
+            // 
+            //             Mat outMat;
+            //             if (file_index >= file_list.Count)
+            //             {
+            //                 MessageBox.Show("Check finished", "State");
+            //                 executeButton.Enabled = false;
+            //                 return;
+            //             }
 
-            Mat outMat;
-            if (file_index >= file_list.Count)
+            arrayOfHeights.Clear();
+            arrayOfImages.Clear();
+            arrayOfStd.Clear();
+
+            sizeSquare = int.Parse(sSquare.Text);
+            centerSquare.X = int.Parse(startX.Text);
+            centerSquare.Y = int.Parse(startY.Text);
+
+            foreach(string file in file_list)
             {
-                MessageBox.Show("Check finished", "State");
-                executeButton.Enabled = false;
-                return;
+                arrayOfHeights.Add(int.Parse(file));
             }
 
+            foreach(string path in path_list)
+            {
+                arrayOfImages.Add(new Bitmap(path));
+            }
+
+            int res = FindSharpestImage(arrayOfImages.ToArray(), arrayOfHeights.ToArray(), sizeSquare, centerSquare);
+
+        }
+
+        private int FindSharpestImage(Bitmap[] arrayOfImages, int[] arrayOfHeights, int sizeSquare, Point centerSquare)
+        {
+            if (arrayOfImages.Length != arrayOfImages.Length)
+                return 0;
+            for (int i = 0; i < arrayOfImages.Length; i++)
+            {
+                Image<Bgr, Byte> imageCV = new Image<Bgr, Byte>(arrayOfImages[i]);
+                Mat mat = imageCV.Mat;
+                Mat cropMat = new Mat(mat, new Rectangle(centerSquare, new Size(sizeSquare, sizeSquare)));
+//                 CvInvoke.CvtColor(mat, mat, ColorConversion.Bgr2Gray);
+                Mat outMat = new Mat();
+                CvInvoke.Laplacian(cropMat, outMat, DepthType.Cv64F);
+
+                MCvScalar meanScalar = new MCvScalar();
+                MCvScalar stdScalar = new MCvScalar();
+                CvInvoke.MeanStdDev(outMat, ref meanScalar, ref stdScalar);
+                double measured = stdScalar.V0 * stdScalar.V0 + stdScalar.V1 * stdScalar.V1 + stdScalar.V2 * stdScalar.V2;
+
+                arrayOfStd.Add(measured);
+            }
+
+            return 0;
         }
         public static void ExifRotate(Image img)
         {
@@ -180,10 +242,20 @@ namespace FindBestSharpness
             dlg.Description = @"Choose folder path";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                InitializeMembers();
                 this.flowLayoutPanelMain.Controls.Clear();
                 m_Controller.AddFolder(dlg.SelectedPath);                
                 this.dirBrowerBtn.Enabled = false;
             }
+        }
+
+        private void InitializeMembers()
+        {
+            file_list.Clear();
+            path_list.Clear();
+            arrayOfHeights.Clear();
+            arrayOfImages.Clear();
+            arrayOfStd.Clear();
         }
 
         private void dirBrowser(object sender, EventArgs e)
@@ -229,16 +301,16 @@ namespace FindBestSharpness
 
         private void checkValidInput(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)/* && (e.KeyChar != '.')*/)
             {
                 e.Handled = true;
             }
 
             // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
+//             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+//             {
+//                 e.Handled = true;
+//             }
         }
     }
     public class ThumbnailImageEventArgs : EventArgs
