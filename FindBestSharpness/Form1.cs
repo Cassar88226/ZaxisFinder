@@ -182,7 +182,14 @@ namespace FindBestSharpness
 
             foreach(string file in file_list)
             {
-                arrayOfZHeights.Add(int.Parse(file));
+                int height;
+                if(int.TryParse(file, out height))
+                    arrayOfZHeights.Add(height);
+                else
+                {
+                    MessageBox.Show("Invalid directory. Please select the correct directory.");
+                    return;
+                }
             }
 
             foreach(string path in path_list)
@@ -192,6 +199,7 @@ namespace FindBestSharpness
 
             int bestHeight = FindSharpestImage(arrayOfImages.ToArray(), arrayOfZHeights.ToArray(), sizeSquare, centerSquare);
 
+            zAxis.Text = bestHeight.ToString();
 
         }
 
@@ -223,7 +231,7 @@ namespace FindBestSharpness
 
         private int FindGoodHeight(int[] heights,  double[] stdVariance)
         {
-            if(0 == stdVariance.Length)
+            if(2 > stdVariance.Length)
                 return -1;
             double[] xVec = heights.ToList().Select(x => (double)x).ToArray();
             CubicSpline cubicSpline = CubicSpline.InterpolateNatural(xVec, stdVariance);
@@ -280,8 +288,11 @@ namespace FindBestSharpness
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.Description = @"Choose folder path";
+            dlg.SelectedPath = Properties.Settings.Default.LastSelectedFolder;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                Properties.Settings.Default.LastSelectedFolder = txtDirectory.Text = dlg.SelectedPath.ToString();
+                Properties.Settings.Default.Save();
                 InitializeMembers();
                 this.flowLayoutPanelMain.Controls.Clear();
                 m_Controller.AddFolder(dlg.SelectedPath);                

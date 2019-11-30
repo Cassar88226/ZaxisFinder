@@ -54,7 +54,7 @@
             // 
             // dirBrowerBtn
             // 
-            this.dirBrowerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dirBrowerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dirBrowerBtn.Location = new System.Drawing.Point(633, 9);
             this.dirBrowerBtn.Name = "dirBrowerBtn";
             this.dirBrowerBtn.Size = new System.Drawing.Size(220, 31);
@@ -74,17 +74,17 @@
             // 
             // txtDirectory
             // 
-            this.txtDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDirectory.Location = new System.Drawing.Point(12, 11);
             this.txtDirectory.Name = "txtDirectory";
-            this.txtDirectory.Size = new System.Drawing.Size(606, 29);
+            this.txtDirectory.Size = new System.Drawing.Size(606, 26);
             this.txtDirectory.TabIndex = 4;
             this.txtDirectory.Text = "Select the Directory";
             // 
             // executeButton
             // 
             this.executeButton.Enabled = false;
-            this.executeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.executeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.executeButton.Location = new System.Drawing.Point(636, 356);
             this.executeButton.Name = "executeButton";
             this.executeButton.Size = new System.Drawing.Size(220, 31);
@@ -186,7 +186,7 @@
             this.zAxis.Name = "zAxis";
             this.zAxis.Size = new System.Drawing.Size(100, 26);
             this.zAxis.TabIndex = 4;
-            this.zAxis.Text = "100";
+            this.zAxis.Text = "0";
             // 
             // label5
             // 
